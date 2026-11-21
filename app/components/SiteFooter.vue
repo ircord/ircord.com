@@ -3,16 +3,19 @@ import { site } from '../site'
 </script>
 
 <template>
-  <footer class="border-t border-line">
+  <footer class="border-t border-line bg-surface">
     <div
-      class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-[14px] text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6"
+      class="wrap flex flex-col gap-6 py-10 text-[14px] text-muted md:flex-row md:items-center md:justify-between"
     >
-      <p class="flex items-center gap-2">
-        <BrandMark class="size-5 flex-none" />
-        IRCord is open source under the MIT license.
-      </p>
+      <div class="flex items-center gap-3">
+        <BrandMark class="size-8 flex-none" />
+        <p>
+          <span class="block font-semibold text-ink">IRCord</span>
+          Open source under the MIT license.
+        </p>
+      </div>
       <nav aria-label="Footer">
-        <ul class="flex flex-wrap gap-x-5 gap-y-1">
+        <ul class="grid grid-cols-2 gap-x-8 gap-y-2 sm:flex sm:flex-wrap sm:gap-x-6">
           <li><a :href="site.repo">GitHub</a></li>
           <li><NuxtLink to="/changelog">What’s new</NuxtLink></li>
           <li><a :href="site.issues">Report a problem</a></li>

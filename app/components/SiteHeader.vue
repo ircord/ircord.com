@@ -11,29 +11,31 @@ const links = [
 </script>
 
 <template>
-  <header class="border-b border-line bg-canvas/90">
-    <div
-      class="mx-auto grid max-w-6xl grid-cols-[auto_auto] items-center justify-between gap-x-6 gap-y-2 px-4 py-3 sm:px-6 md:grid-cols-[auto_1fr_auto]"
-    >
+  <!-- Sticky on every width. On phones the links move to a second row that scrolls sideways,
+       because the site sends no scripts for a menu button. -->
+  <header
+    class="sticky top-0 z-20 border-b border-line bg-canvas/80 backdrop-blur-xl backdrop-saturate-150"
+  >
+    <div class="wrap flex h-14 items-center gap-6 md:h-16">
       <NuxtLink
         to="/"
-        class="flex items-center gap-2.5 rounded-lg text-[17px] font-bold tracking-tight text-ink no-underline"
+        class="flex flex-none items-center gap-2.5 rounded-lg text-[17px] font-bold tracking-tight text-ink no-underline"
       >
         <BrandMark class="size-8 flex-none" />
         IRCord
       </NuxtLink>
       <nav
         aria-label="Main"
-        class="col-span-2 row-start-2 md:col-span-1 md:col-start-2 md:row-start-1"
+        class="hidden flex-1 justify-center md:flex"
       >
-        <ul class="flex flex-wrap gap-x-5 gap-y-1 text-[14px] font-medium md:justify-center">
+        <ul class="flex gap-1 text-[14px] font-medium">
           <li
             v-for="link in links"
             :key="link.to"
           >
             <NuxtLink
               :to="link.to"
-              class="text-muted no-underline hover:text-ink"
+              class="inline-flex h-9 items-center rounded-full px-3 text-muted no-underline transition-colors hover:bg-raised hover:text-ink"
               >{{ link.label }}</NuxtLink
             >
           </li>
@@ -41,9 +43,28 @@ const links = [
       </nav>
       <a
         :href="site.app"
-        class="btn-primary min-h-10 px-4 text-[14px]"
+        class="btn-primary ml-auto min-h-9 px-4 text-[14px] md:ml-0"
         >Open IRCord</a
       >
     </div>
+    <nav
+      aria-label="Main"
+      class="md:hidden"
+    >
+      <ul
+        class="no-scrollbar wrap flex gap-1.5 overflow-x-auto pb-2.5 text-[14px] font-medium whitespace-nowrap"
+      >
+        <li
+          v-for="link in links"
+          :key="link.to"
+        >
+          <NuxtLink
+            :to="link.to"
+            class="inline-flex h-8 items-center rounded-full border border-line bg-surface px-3 text-muted no-underline active:text-ink"
+            >{{ link.label }}</NuxtLink
+          >
+        </li>
+      </ul>
+    </nav>
   </header>
 </template>
