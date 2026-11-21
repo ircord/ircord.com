@@ -432,15 +432,43 @@ const install = [
             <p class="mt-2 leading-relaxed text-muted">
               With Docker Compose installed, run these commands to start the web app and server.
             </p>
-            <!-- A terminal stays dark in both color modes. -->
-            <div class="mt-6 overflow-hidden rounded-2xl bg-[#17141a] text-[#ece6ea] shadow-lg">
-              <div
-                class="flex items-center gap-1.5 border-b border-white/10 px-4 py-2.5"
-                aria-hidden="true"
-              >
-                <span class="size-2.5 rounded-full bg-[#ff5f57]" />
-                <span class="size-2.5 rounded-full bg-[#febc2e]" />
-                <span class="size-2.5 rounded-full bg-[#28c840]" />
+            <!-- A terminal stays dark in both color modes. public/site.js shows the copy button. -->
+            <div
+              class="mt-6 overflow-hidden rounded-2xl bg-[#17141a] text-[#ece6ea] shadow-lg"
+              data-terminal
+            >
+              <div class="flex h-10 items-center border-b border-white/10 pr-2 pl-4">
+                <span
+                  class="flex gap-1.5"
+                  aria-hidden="true"
+                >
+                  <span class="size-2.5 rounded-full bg-[#ff5f57]" />
+                  <span class="size-2.5 rounded-full bg-[#febc2e]" />
+                  <span class="size-2.5 rounded-full bg-[#28c840]" />
+                </span>
+                <button
+                  type="button"
+                  class="ml-auto inline-flex h-7 items-center gap-1.5 rounded-md px-2.5 text-[13px] font-medium text-[#b9aeb5] transition-colors hover:bg-white/10 hover:text-white"
+                  aria-live="polite"
+                  data-copy
+                  hidden
+                >
+                  <svg
+                    class="size-3.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M9 9h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V10a1 1 0 0 1 1-1Zm-4 6H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"
+                    />
+                  </svg>
+                  <span data-copy-label>Copy commands</span>
+                </button>
               </div>
               <pre
                 class="p-4 font-mono text-[13px] leading-relaxed wrap-anywhere whitespace-pre-wrap lg:text-[14px]"

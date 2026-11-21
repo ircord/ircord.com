@@ -9,8 +9,9 @@ const links = [
   { label: 'What’s new', to: '/changelog' },
 ]
 
-// Closes the phone menu after a link is chosen; the menu opens and closes without it.
-useHead({ script: [{ type: 'module', src: '/menu.js' }] })
+// Small page behavior for every page, such as closing the phone menu after a link is chosen.
+// Every page works without it.
+useHead({ script: [{ type: 'module', src: '/site.js' }] })
 </script>
 
 <template>
@@ -48,7 +49,7 @@ useHead({ script: [{ type: 'module', src: '/menu.js' }] })
         class="btn-primary min-h-9 px-4 text-[14px]"
         >Open IRCord</a
       >
-      <!-- Phones get a menu button. It works without scripts; public/menu.js closes it after a
+      <!-- Phones get a menu button. It works without scripts; public/site.js closes it after a
            link is chosen or on a tap outside. -->
       <details
         id="site-menu"
