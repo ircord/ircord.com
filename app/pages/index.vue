@@ -23,6 +23,8 @@ const features: {
   alt: string
   /** How the picture fills the card; by default it is cropped from the top left. */
   fit?: string
+  /** The picture's frame; by default square on phones, to zoom in, and 16:10 from `sm`. */
+  stage?: string
 }[] = [
   {
     title: 'Message history and search',
@@ -48,13 +50,15 @@ const features: {
     text: 'Get mentions and direct messages on your computer and your phone. The inbox keeps what you missed.',
     shot: 'inbox',
     alt: 'The inbox with two direct messages and one mention.',
+    stage: 'aspect-[5/4] sm:aspect-[16/10]',
   },
   {
     title: 'Replies, reactions, edits and custom emoji',
     text: 'Use them on networks that support them. Other IRC clients see ordinary messages.',
     shot: 'reactions',
     alt: 'Messages with formatted text and emoji reactions.',
-    fit: 'object-contain object-left-top',
+    fit: 'object-cover object-left-top sm:object-contain',
+    stage: 'aspect-video sm:aspect-[16/10]',
   },
   {
     title: 'Your look',
@@ -153,10 +157,11 @@ const install = [
           </div>
         </div>
 
-        <!-- The desktop screenshot in a browser frame, with the phone in front of its corner. -->
-        <div class="relative mx-auto mt-12 max-w-5xl pr-[6%] sm:mt-16 sm:pr-[8%]">
+        <!-- The desktop screenshot in a browser frame, with the phone in front of its corner. On
+             phones the phone screenshot leads, large enough to read, with the desktop behind it. -->
+        <div class="relative mx-auto mt-12 max-w-5xl sm:mt-16 sm:pr-[8%]">
           <div
-            class="overflow-hidden rounded-xl border border-line bg-surface shadow-2xl shadow-black/15 sm:rounded-2xl"
+            class="overflow-hidden rounded-xl border border-line bg-surface shadow-2xl shadow-black/15 max-sm:absolute max-sm:top-0 max-sm:left-0 max-sm:w-[88%] sm:rounded-2xl"
           >
             <div
               class="flex h-6 items-center gap-1.5 border-b border-line px-2.5 sm:h-9 sm:gap-2 sm:px-4"
@@ -177,12 +182,13 @@ const install = [
             />
           </div>
           <div
-            class="absolute right-0 -bottom-[8%] w-[24%] max-w-[230px] overflow-hidden rounded-[clamp(10px,2.6vw,30px)] border-[clamp(3px,0.5vw,6px)] border-[#1c181d] shadow-2xl shadow-black/30"
+            class="relative mt-[22%] mr-[2%] ml-auto aspect-[9/16] w-[58%] max-w-[300px] overflow-hidden rounded-[clamp(22px,2.6vw,30px)] border-[clamp(4px,0.5vw,6px)] border-[#1c181d] shadow-2xl shadow-black/40 sm:absolute sm:right-0 sm:-bottom-[8%] sm:mt-0 sm:mr-0 sm:aspect-auto sm:w-[24%] sm:max-w-[230px] sm:rounded-[clamp(10px,2.6vw,30px)] sm:border-[clamp(3px,0.5vw,6px)]"
           >
             <AppShot
               name="channel-phone"
               alt="The same channel on a phone."
               eager
+              img-class="block h-full w-full object-cover object-top"
             />
           </div>
         </div>
@@ -300,7 +306,11 @@ const install = [
               <p class="mt-2 leading-relaxed text-muted">{{ feature.text }}</p>
             </div>
             <!-- The screenshot sits in the corner of a tinted stage, like a window. -->
-            <div class="feature-stage relative mt-auto aspect-[16/10]">
+            <!-- Phones get a square stage, which zooms the cropped screenshot to a readable size. -->
+            <div
+              class="feature-stage relative mt-auto"
+              :class="feature.stage ?? 'aspect-square sm:aspect-[16/10]'"
+            >
               <div
                 class="absolute inset-0 top-5 left-5 overflow-hidden rounded-tl-2xl border-t border-l border-line bg-surface shadow-xl shadow-black/10 transition-transform duration-300 group-hover:-translate-y-1 sm:top-7 sm:left-7"
               >
