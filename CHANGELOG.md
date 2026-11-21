@@ -5,6 +5,10 @@ What changed for people using IRCord, newest release first. Each release lists w
 
 ## Unreleased
 
+### Improved
+
+- Find setup instructions, client downloads, and separate release notes for the frontend, backend, and desktop app on the website.
+
 ## v0.7.2 — 2026-11-21
 
 ### Improved

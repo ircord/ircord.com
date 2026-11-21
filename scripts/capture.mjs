@@ -2,6 +2,7 @@
 // Takes the website's screenshots from the app's demo mode and writes them to public/shots/ as
 // WebP, in light and dark. Start a demo first (see "Website" in the README), then run
 // `bun run capture` from website/. BASE selects another demo address.
+// Pass --og-only to refresh the link preview from the existing desktop screenshot.
 //
 // The screenshots use the project's own pixel-art profile pictures and illustration, and the name
 // "Robin" for the signed-in person: the demo's photos have no recorded license, and its signed-in
@@ -12,6 +13,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import { randomUUID } from 'node:crypto'
 import { dirname, join } from 'node:path'
+import { site } from '../app/site.ts'
 
 /**
  * The emoji font, placed after the app's interface and code fonts. Chromium draws emoji from it
@@ -273,13 +275,13 @@ body { margin: 0; width: 1200px; height: 630px; overflow: hidden; font-family: G
   color: #f4f0f3; background: radial-gradient(70% 70% at 30% 0%, #f43f5e33, transparent 70%), #111013; }
 .text { position: absolute; left: 72px; top: 72px; width: 520px; }
 .brand { display: flex; align-items: center; gap: 16px; font-size: 34px; font-weight: 700; }
-h1 { margin: 56px 0 0; font-size: 68px; line-height: 1.04; letter-spacing: -0.03em; }
+h1 { margin: 56px 0 0; font-size: 62px; line-height: 1.04; letter-spacing: -0.03em; text-wrap: balance; }
 p { margin: 24px 0 0; font-size: 26px; line-height: 1.4; color: #a89ea6; }
 .shot { position: absolute; left: 640px; top: 90px; width: 900px; border-radius: 22px;
   border: 2px solid #2d2730; box-shadow: 0 30px 80px #0008; }
 </style>
 <div class="text"><div class="brand"><img src="${data('image/svg+xml', logo)}" width="56" height="56" alt="">IRCord</div>
-<h1>IRC that stays connected.</h1><p>A web client and a bouncer in one.</p></div>
+<h1>${site.tagline}.</h1><p>A web client and a bouncer in one.</p></div>
 <img class="shot" src="${data('image/webp', shot)}" alt="">`)
   await page.evaluate(() => document.fonts.ready)
   await page.screenshot({ path: new URL('../public/og.png', import.meta.url).pathname })
@@ -287,19 +289,24 @@ p { margin: 24px 0 0; font-size: 26px; line-height: 1.4; color: #a89ea6; }
   await page.close()
 }
 
-await mkdir(out, { recursive: true })
+const ogOnly = process.argv.includes('--og-only')
 const browser = await chromium.launch()
 try {
-  for (const mode of ['light', 'dark']) {
-    await desktop(browser, mode)
-    await phone(browser, mode)
+  if (!ogOnly) {
+    await mkdir(out, { recursive: true })
+    for (const mode of ['light', 'dark']) {
+      await desktop(browser, mode)
+      await phone(browser, mode)
+    }
   }
   await socialCard(browser)
 } finally {
   await browser.close()
 }
-await writeFile(
-  new URL('../app/shots.json', import.meta.url),
-  `${JSON.stringify(sizes, null, 2)}\n`,
-)
-console.log('Wrote app/shots.json')
+if (!ogOnly) {
+  await writeFile(
+    new URL('../app/shots.json', import.meta.url),
+    `${JSON.stringify(sizes, null, 2)}\n`,
+  )
+  console.log('Wrote app/shots.json')
+}

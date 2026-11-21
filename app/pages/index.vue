@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { collaborators, latest } from '../data'
+import { collaborators } from '../data'
 import { site } from '../site'
 import type shots from '../shots.json'
 
 const description =
   'IRCord is a web client and a bouncer in one. It keeps your IRC networks online and saves the messages you miss.'
+const title = `${site.tagline} | IRCord`
 useSeoMeta({
-  title: 'IRCord: IRC that stays connected',
+  title,
   description,
-  ogTitle: 'IRCord: IRC that stays connected',
+  ogTitle: title,
   ogDescription: description,
   ogUrl: `${site.url}/`,
 })
@@ -77,7 +78,7 @@ const features: {
             id="hero-title"
             class="text-[40px] leading-[1.05] font-bold tracking-[-0.03em] text-balance sm:text-[64px]"
           >
-            IRC that stays connected.
+            {{ site.tagline }}.
           </h1>
           <p class="mt-6 max-w-2xl text-[18px] leading-relaxed text-muted sm:text-[20px]">
             {{ description }} Open it in a browser or install it on your phone.
@@ -89,9 +90,9 @@ const features: {
               >Open IRCord</a
             >
             <a
-              href="#host"
+              href="#get-started"
               class="btn-secondary"
-              >Host your own</a
+              >Get started</a
             >
           </div>
         </div>
@@ -264,34 +265,32 @@ const features: {
       </div>
     </section>
 
-    <!-- 5 Two ways to use it -->
+    <!-- Get started -->
     <section
-      id="host"
-      aria-labelledby="ways-title"
+      id="get-started"
+      aria-labelledby="get-started-title"
       class="scroll-mt-4 bg-surface py-20"
     >
       <div class="mx-auto max-w-6xl px-4 sm:px-6">
-        <p class="eyebrow">Get started</p>
         <h2
-          id="ways-title"
-          class="mt-3 text-[30px] leading-tight font-bold tracking-tight sm:text-[40px]"
+          id="get-started-title"
+          class="text-[30px] leading-tight font-bold tracking-tight sm:text-[40px]"
         >
-          Two ways to use it
+          How to get started
         </h2>
         <div class="mt-10 grid gap-5 md:grid-cols-2">
           <div class="flex min-w-0 flex-col rounded-3xl border border-line bg-canvas p-6 sm:p-7">
             <h3 class="text-[22px] font-semibold">Use chat.ircord.com</h3>
             <p class="mt-3 leading-relaxed text-muted">
-              Create an account on the project’s own server. It comes with an account on the
-              irc.ircord.com network. Add other networks at any time.
+              One account works on chat.ircord.com and the {{ site.ircNetwork }} network.
             </p>
-            <p class="mt-3 leading-relaxed text-muted">
-              Sign-up needs an invitation key for now. To ask for one,
-              <a
-                :href="site.newIssue"
-                class="prose-link"
-                >open an issue on GitHub</a
-              >.
+            <ol class="mt-5 list-decimal space-y-3 pl-5 leading-relaxed marker:font-semibold">
+              <li>Ask an IRCord maintainer for a registration key.</li>
+              <li>Create an account with the key and choose your username and password.</li>
+              <li>Choose a channel from the welcome guide to start chatting.</li>
+            </ol>
+            <p class="mt-4 leading-relaxed text-muted">
+              To connect to a network like Libera.Chat, go to Settings → Networks → Add a network.
             </p>
             <div class="mt-auto flex flex-wrap gap-3 pt-6">
               <a
@@ -306,22 +305,32 @@ const features: {
               >
             </div>
           </div>
-          <div class="flex min-w-0 flex-col rounded-3xl border border-line bg-canvas p-6 sm:p-7">
-            <h3 class="text-[22px] font-semibold">Host your own</h3>
+          <div
+            id="host"
+            class="flex min-w-0 scroll-mt-4 flex-col rounded-3xl border border-line bg-canvas p-6 sm:p-7"
+          >
+            <h3 class="text-[22px] font-semibold">Host your own IRCord</h3>
             <p class="mt-3 leading-relaxed text-muted">
-              Run IRCord on your own server with Docker. It needs one data volume and no separate
-              database.
+              With Docker Compose installed, run these commands to start the web app and server.
             </p>
             <pre
-              class="mt-5 overflow-x-auto rounded-2xl border border-line bg-surface p-4 font-mono text-[14px] leading-relaxed"
-            ><code>git clone https://github.com/karbowiak/ircord.git
-cd ircord
-docker compose up -d --build</code></pre>
+              class="mt-5 rounded-2xl border border-line bg-surface p-4 font-mono text-[14px] leading-relaxed wrap-anywhere whitespace-pre-wrap"
+            ><code>git clone https://github.com/ircord/hosting.git
+cd hosting
+docker compose up -d --wait</code></pre>
+            <p class="mt-4 leading-relaxed text-muted">
+              Open <code class="text-ink">http://localhost:3000</code> to create an account.
+            </p>
             <div class="mt-auto flex flex-wrap gap-3 pt-6">
               <a
                 :href="site.docker"
                 class="btn-secondary"
-                >Read the setup guide</a
+                >Docker Compose guide</a
+              >
+              <a
+                :href="site.kubernetes"
+                class="btn-secondary"
+                >Helm guide</a
               >
             </div>
           </div>
@@ -347,6 +356,89 @@ docker compose up -d --build</code></pre>
             </li>
             <li>Delete your account at any time in Settings → Account.</li>
             <li>Accounts are deleted after 90 days without a visit.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Downloads -->
+    <section
+      id="downloads"
+      aria-labelledby="downloads-title"
+      class="scroll-mt-4 py-20"
+    >
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <h2
+          id="downloads-title"
+          class="text-[30px] leading-tight font-bold tracking-tight sm:text-[40px]"
+        >
+          Downloads
+        </h2>
+        <div class="mt-10 grid gap-8 md:grid-cols-2 md:gap-10">
+          <div class="panel p-6 sm:p-7">
+            <h3 class="text-[22px] font-semibold">Install the web app</h3>
+            <p class="mt-3 leading-relaxed text-muted">
+              Open IRCord in your browser, then install it on your device.
+            </p>
+            <dl class="mt-5 space-y-3 text-[15px] leading-relaxed">
+              <div>
+                <dt class="inline font-semibold">iPhone and iPad.</dt>
+                <dd class="ml-1 inline text-muted">In Safari, use Share → Add to Home Screen.</dd>
+              </div>
+              <div>
+                <dt class="inline font-semibold">Android.</dt>
+                <dd class="ml-1 inline text-muted">
+                  In Chrome, choose Install from the browser menu.
+                </dd>
+              </div>
+              <div>
+                <dt class="inline font-semibold">Desktop.</dt>
+                <dd class="ml-1 inline text-muted">
+                  Use the install option in your browser, where available.
+                </dd>
+              </div>
+            </dl>
+            <a
+              :href="site.app"
+              class="btn-primary mt-6"
+              >Open web app</a
+            >
+          </div>
+          <ul class="divide-y divide-line border-y border-line">
+            <li class="py-5">
+              <h3 class="text-[18px] font-semibold">Command-line client</h3>
+              <p class="mt-1 leading-relaxed text-muted">
+                Manage your server with <code class="text-ink">ircordctl</code>. Builds are
+                available for macOS, Linux, and Windows.
+              </p>
+              <a
+                :href="site.cliReleases"
+                class="prose-link mt-2 inline-block"
+                >Download ircordctl</a
+              >
+            </li>
+            <li class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 py-5">
+              <div>
+                <h3 class="text-[18px] font-semibold">Native desktop app</h3>
+                <p class="mt-1 text-muted">Planned.</p>
+              </div>
+              <a
+                :href="site.desktop"
+                class="prose-link"
+                >Desktop project</a
+              >
+            </li>
+            <li class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 py-5">
+              <div>
+                <h3 class="text-[18px] font-semibold">Native mobile app</h3>
+                <p class="mt-1 text-muted">Planned for iOS and Android.</p>
+              </div>
+              <a
+                :href="site.mobile"
+                class="prose-link"
+                >Mobile project</a
+              >
+            </li>
           </ul>
         </div>
       </div>
@@ -408,11 +500,6 @@ docker compose up -d --build</code></pre>
               class="prose-link"
               >MIT license</a
             >.
-            <template v-if="latest">
-              The latest release is {{ latest.version
-              }}<template v-if="latest.date">, from {{ formatDate(latest.date) }}</template
-              >.
-            </template>
           </p>
           <p
             v-if="collaborators.length"

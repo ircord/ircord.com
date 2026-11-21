@@ -2,6 +2,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { site } from './app/site'
+import { changelogs } from './app/utils/component-changelog'
 
 const root = fileURLToPath(new URL('.', import.meta.url))
 const releaseDir = process.env.IRCORD_RELEASE_DIR ? resolve(process.env.IRCORD_RELEASE_DIR) : root
@@ -36,7 +37,7 @@ export default defineNuxtConfig({
         { property: 'og:image', content: `${site.url}/og.png` },
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
-        { property: 'og:image:alt', content: 'IRCord: IRC that stays connected.' },
+        { property: 'og:image:alt', content: `IRCord. ${site.tagline}.` },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:image', content: `${site.url}/og.png` },
       ],
@@ -52,7 +53,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      routes: ['/', '/changelog'],
+      routes: ['/', ...changelogs.map((log) => log.path)],
       // A client-side fallback page has nothing to show without scripts.
       ignore: ['/200.html'],
       crawlLinks: true,

@@ -4,7 +4,8 @@ import { site } from '../site'
 const links = [
   { label: 'How it works', to: '/#how-it-works' },
   { label: 'Features', to: '/#features' },
-  { label: 'Host it', to: '/#host' },
+  { label: 'Get started', to: '/#get-started' },
+  { label: 'Downloads', to: '/#downloads' },
   { label: 'What’s new', to: '/changelog' },
 ]
 </script>
@@ -34,13 +35,6 @@ const links = [
               :to="link.to"
               class="text-muted no-underline hover:text-ink"
               >{{ link.label }}</NuxtLink
-            >
-          </li>
-          <li>
-            <a
-              :href="site.repo"
-              class="text-muted no-underline hover:text-ink"
-              >GitHub</a
             >
           </li>
         </ul>
