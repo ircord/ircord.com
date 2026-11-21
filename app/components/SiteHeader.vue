@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { site } from '../site'
 
+/** Links marked `wide` stay out of the phone row so the rest fit without scrolling. */
 const links = [
-  { label: 'How it works', to: '/#how-it-works' },
+  { label: 'How it works', to: '/#how-it-works', wide: true },
   { label: 'Features', to: '/#features' },
   { label: 'Get started', to: '/#get-started' },
   { label: 'Downloads', to: '/#downloads' },
@@ -49,18 +50,19 @@ const links = [
     </div>
     <nav
       aria-label="Main"
-      class="md:hidden"
+      class="border-t border-line/60 md:hidden"
     >
       <ul
-        class="no-scrollbar wrap flex gap-1.5 overflow-x-auto pb-2.5 text-[14px] font-medium whitespace-nowrap"
+        class="no-scrollbar wrap flex h-10 items-center justify-between gap-4 overflow-x-auto text-[14px] font-medium whitespace-nowrap sm:justify-start sm:gap-7"
       >
         <li
           v-for="link in links"
           :key="link.to"
+          :class="link.wide && 'hidden sm:block'"
         >
           <NuxtLink
             :to="link.to"
-            class="inline-flex h-8 items-center rounded-full border border-line bg-surface px-3 text-muted no-underline active:text-ink"
+            class="inline-flex h-10 items-center text-muted no-underline active:text-ink"
             >{{ link.label }}</NuxtLink
           >
         </li>
