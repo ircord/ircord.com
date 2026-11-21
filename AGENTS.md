@@ -1,7 +1,9 @@
 # Working on IRCord
 
-This file defines how contributors plan, implement, verify, and release changes
-to IRCord.
+This repository owns the public site at ircord.com.
+Use the [development workspace](https://github.com/ircord/dev-environment/blob/main/AGENTS.md#git-submodules)
+for integration checks and work across components. Push changes to this
+repository before updating its workspace pin.
 
 ## Contract
 
@@ -25,9 +27,10 @@ Report the result, validation, and unfinished work to the user.
 
 ### Work with an issue
 
-If an issue exists, read it before implementation. Review its dependencies,
-assignees, comments, and related pull requests. If no issue exists, create one
-for the agreed scope.
+Use [ircord/issues](https://github.com/ircord/issues/issues) to track this component's work.
+Read an existing issue before implementation. Review its dependencies,
+assignees, comments, and related pull requests. If an issue is needed, create
+it there for the agreed scope.
 
 Write issue descriptions that contributors can understand without local planning
 files. Use local planning files as reference material.
@@ -74,10 +77,6 @@ Use authenticated Hypertext Transfer Protocol (HTTP) requests for mutations.
 Use private WebSockets for live updates. Preserve account isolation, bounded
 queues, durable replay, and credential redaction.
 
-After changing application programming interface (API) contracts, run
-`make api-generate`. Keep OpenAPI, the typed frontend client, and WebSocket
-validation aligned with Go contracts.
-
 Run the relevant local checks from [README.md](README.md). Add meaningful
 regression tests for behavior changes. After UI changes, verify behavior in a
 browser.
@@ -102,8 +101,9 @@ skip the changelog entry.
 
 ### Complete work
 
-For work with an issue, reference it in the commit or pull request. Before
-closing the issue, record the changes and actual validation results.
+For work with an issue, use a full reference such as `ircord/issues#123` in
+the commit or pull request. Before closing the issue, record the changes and
+actual validation results.
 
 Mark work complete only after you satisfy the agreed requirements and any issue
 acceptance criteria. Distinguish source changes, local verification, and
@@ -111,27 +111,14 @@ deployed behavior.
 
 ### Release changes
 
-Backend, frontend, and website builds and publication run only for pushed version tags,
-such as `v0.1.0`. Flux follows stable `vX.Y.Z` images. Branch pushes and pull
-requests do not build or deploy these images.
-
-The active embedding pipeline uses direct files, the configured Reddit API handler,
-anonymous Instagram and TikTok extraction, reviewed provider handlers, and generic oEmbed.
-Use yt-dlp only for validated Instagram and TikTok post routes. Do not enable generic
-extractors, account cookies, or the retained Iframely connector by default.
-
-Embed UI adapters belong in `frontend/app/components/embed/`, with a static
-`embedProvider` declaration for URL matching, layout and resolver policy. Keep
-selection, caching and expiry in `useEmbed`. Reserve geometry before fetching;
-loading, error and player states must not resize it. Unknown sites use a fixed
-metadata card until they have a controlled adapter. A separate Go extractor is
-optional when generic oEmbed already supplies the required data.
+Build and check the website from this repository. Confirm the configured
+publisher and the website image policy in the homelab GitOps repository before
+cutting a website release.
 
 Create a release tag only when the user has authorized release or deployment.
-Use the latest stable Go version in builds.
 
-Follow [Cutting a release](README.md#cutting-a-release). In the release commit,
-move the `## Unreleased` changes in `CHANGELOG.md` into the version's section.
+In the release commit, move the `## Unreleased` changes into the version's
+section and add a new `## Unreleased` heading.
 
 ### Protect private material
 
@@ -166,10 +153,6 @@ and code generators.
 GitHub issues are preferred, but optional. Direct user instructions override
 these workflow defaults.
 
-Nuxt and Vue code lives in `frontend/`. Go, Huma, and upstream Internet Relay Chat
-(IRC) code lives in `backend/`. The static public website lives in `website/`; see
-[Website](README.md#website).
-
 ## Failure modes
 
 `status: needs-design` means the design needs agreement before implementation.
@@ -185,4 +168,4 @@ should take over, release the claim.
 - [Writing style](docs/STYLE.md)
 - [Local checks and release instructions](README.md)
 - [User-facing changelog](CHANGELOG.md)
-- [Shared backlog](https://github.com/karbowiak/ircord/issues/23)
+- [Shared issue tracker](https://github.com/ircord/issues/issues)
