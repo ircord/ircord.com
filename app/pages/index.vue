@@ -691,6 +691,7 @@ const install = [
           >
             <NuxtLink
               to="/changelog"
+              external
               class="btn-primary"
               >What’s new</NuxtLink
             >

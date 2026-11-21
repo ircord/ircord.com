@@ -36,6 +36,7 @@ useHead({ script: [{ type: 'module', src: '/menu.js' }] })
           >
             <NuxtLink
               :to="link.to"
+              :external="link.to === '/changelog'"
               class="inline-flex h-9 items-center rounded-full px-3 text-muted no-underline transition-colors hover:bg-raised hover:text-ink"
               >{{ link.label }}</NuxtLink
             >
@@ -88,6 +89,7 @@ useHead({ script: [{ type: 'module', src: '/menu.js' }] })
             >
               <NuxtLink
                 :to="link.to"
+                :external="link.to === '/changelog'"
                 class="flex h-13 items-center justify-between text-ink no-underline active:text-link"
                 >{{ link.label }}
                 <svg

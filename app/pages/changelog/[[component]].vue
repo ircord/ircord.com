@@ -39,6 +39,7 @@ useHead({
         >
           <NuxtLink
             :to="log.path"
+            external
             :aria-current="component.id === log.id ? 'page' : undefined"
             class="inline-flex min-h-11 items-center border-b-2 border-transparent px-1 font-semibold text-muted no-underline hover:text-ink aria-[current=page]:border-accent aria-[current=page]:text-ink"
             >{{ log.label }}</NuxtLink

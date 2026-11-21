@@ -17,7 +17,13 @@ import { site } from '../site'
       <nav aria-label="Footer">
         <ul class="grid grid-cols-2 gap-x-8 gap-y-2 sm:flex sm:flex-wrap sm:gap-x-6">
           <li><a :href="site.repo">GitHub</a></li>
-          <li><NuxtLink to="/changelog">What’s new</NuxtLink></li>
+          <li>
+            <NuxtLink
+              to="/changelog"
+              external
+              >What’s new</NuxtLink
+            >
+          </li>
           <li><a :href="site.issues">Report a problem</a></li>
           <li><a :href="site.app">chat.ircord.com</a></li>
         </ul>
