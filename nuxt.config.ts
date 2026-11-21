@@ -1,5 +1,10 @@
 import tailwindcss from '@tailwindcss/vite'
+import { resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { site } from './app/site'
+
+const root = fileURLToPath(new URL('.', import.meta.url))
+const releaseDir = process.env.IRCORD_RELEASE_DIR ? resolve(process.env.IRCORD_RELEASE_DIR) : root
 
 // The public website at ircord.com: static HTML and CSS with no client scripts. `nuxt generate`
 // renders every page at build time; the Dockerfile serves the result.
@@ -7,6 +12,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-11-01',
   devtools: { enabled: false },
   modules: ['@nuxt/eslint'],
+  alias: { '#release-content': releaseDir },
   css: ['~/assets/css/main.css'],
   features: {
     // The pages work without JavaScript, so none is sent. Styles go to files the CSP allows.
@@ -40,10 +46,9 @@ export default defineNuxtConfig({
       ],
     },
   },
-  // The changelog and collaborators files live at the repository root.
   vite: {
     plugins: [tailwindcss()],
-    server: { fs: { allow: ['..'] } },
+    server: { fs: { allow: [root, releaseDir] } },
   },
   nitro: {
     prerender: {

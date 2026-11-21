@@ -1,7 +1,5 @@
-// The repository's changelog and collaborators, read when the site is built. The Dockerfile
-// copies both files next to the website, at the same relative path.
-import changelog from '../../CHANGELOG.md?raw'
-import collaboratorsFile from '../../COLLABORATORS.md?raw'
+import changelog from '#release-content/CHANGELOG.md?raw'
+import collaboratorsFile from '#release-content/COLLABORATORS.md?raw'
 import { parseChangelog, parseCollaborators } from './utils/changelog'
 
 export const releases = parseChangelog(changelog)

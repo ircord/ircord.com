@@ -1,6 +1,8 @@
 import { strict as assert } from 'node:assert'
 import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { test } from 'node:test'
+import { fileURLToPath } from 'node:url'
 import { formatDate, parseChangelog, parseCollaborators, parseInline } from './changelog'
 
 const sample = `# Changelog
@@ -90,14 +92,11 @@ test('splits bold, code and https links, and keeps everything else as text', () 
 })
 
 test('reads the repository changelog and collaborators', () => {
-  const releases = parseChangelog(
-    readFileSync(new URL('../../../CHANGELOG.md', import.meta.url), 'utf8'),
-  )
+  const releaseDir = process.env.IRCORD_RELEASE_DIR || fileURLToPath(new URL('../..', import.meta.url))
+  const releases = parseChangelog(readFileSync(resolve(releaseDir, 'CHANGELOG.md'), 'utf8'))
   assert.ok(releases.length > 0)
   assert.ok(releases.every((release) => release.groups.length > 0))
-  const names = parseCollaborators(
-    readFileSync(new URL('../../../COLLABORATORS.md', import.meta.url), 'utf8'),
-  )
+  const names = parseCollaborators(readFileSync(resolve(releaseDir, 'COLLABORATORS.md'), 'utf8'))
   assert.ok(names.length > 0)
 })
 

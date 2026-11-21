@@ -1,2 +1,46 @@
-# nuxt generate links dist to .output/public.
+node_modules
+.nuxt
+.output
+.data
+.env
+.DS_Store
+# Release notes baked into the frontend image by the container workflow.
+/frontend/server/assets/changelog.json
+.impeccable/
+.agents/
+.codex/
+.claude/
+
+# Local planning and handover notes.
+/BACKEND-REQUESTS.md
+/PLAN.md
+/PRODUCT.md
+/E2EE.md
+
+# Publish shared documentation, the root README, changelog, collaborators, and agent instructions.
+*.md
+*.mdx
+!/README.md
+!/AGENTS.md
+!/CHANGELOG.md
+!/COLLABORATORS.md
+!/docs/**/*.md
+!/docs/**/*.mdx
+.env.*
+!.env.example
+*.db
+*.db-*
+*.sqlite*
+*.pem
+*.key
+*.p12
+*.pfx
+*.log
+coverage*
+dist/
+# Nuxt generate also creates a dist symlink.
 /dist
+bin/
+__pycache__/
+*.tsbuildinfo
+orca-paste-*.png
