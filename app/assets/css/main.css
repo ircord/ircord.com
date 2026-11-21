@@ -59,13 +59,7 @@
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
     /* Keeps anchored sections clear of the sticky header. */
-    scroll-padding-top: 6.5rem;
-  }
-
-  @media (min-width: 48rem) {
-    html {
-      scroll-padding-top: 4.5rem;
-    }
+    scroll-padding-top: 5rem;
   }
 
   body {

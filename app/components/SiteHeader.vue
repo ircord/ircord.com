@@ -1,26 +1,26 @@
 <script setup lang="ts">
 import { site } from '../site'
 
-/** Links marked `wide` stay out of the phone row so the rest fit without scrolling. */
 const links = [
-  { label: 'How it works', to: '/#how-it-works', wide: true },
+  { label: 'How it works', to: '/#how-it-works' },
   { label: 'Features', to: '/#features' },
   { label: 'Get started', to: '/#get-started' },
   { label: 'Downloads', to: '/#downloads' },
   { label: 'What’s new', to: '/changelog' },
 ]
+
+// Closes the phone menu after a link is chosen; the menu opens and closes without it.
+useHead({ script: [{ type: 'module', src: '/menu.js' }] })
 </script>
 
 <template>
-  <!-- Sticky on every width. On phones the links move to a second row that scrolls sideways,
-       because the site sends no scripts for a menu button. -->
   <header
     class="sticky top-0 z-20 border-b border-line bg-canvas/80 backdrop-blur-xl backdrop-saturate-150"
   >
-    <div class="wrap flex h-14 items-center gap-6 md:h-16">
+    <div class="wrap flex h-14 items-center gap-3 md:h-16 md:gap-6">
       <NuxtLink
         to="/"
-        class="flex flex-none items-center gap-2.5 rounded-lg text-[17px] font-bold tracking-tight text-ink no-underline"
+        class="mr-auto flex flex-none items-center gap-2.5 rounded-lg text-[17px] font-bold tracking-tight text-ink no-underline md:mr-0"
       >
         <BrandMark class="size-8 flex-none" />
         IRCord
@@ -44,29 +44,68 @@ const links = [
       </nav>
       <a
         :href="site.app"
-        class="btn-primary ml-auto min-h-9 px-4 text-[14px] md:ml-0"
+        class="btn-primary min-h-9 px-4 text-[14px]"
         >Open IRCord</a
       >
-    </div>
-    <nav
-      aria-label="Main"
-      class="border-t border-line/60 md:hidden"
-    >
-      <ul
-        class="no-scrollbar wrap flex h-10 items-center justify-between gap-4 overflow-x-auto text-[14px] font-medium whitespace-nowrap sm:justify-start sm:gap-7"
+      <!-- Phones get a menu button. It works without scripts; public/menu.js closes it after a
+           link is chosen or on a tap outside. -->
+      <details
+        id="site-menu"
+        class="group md:hidden"
       >
-        <li
-          v-for="link in links"
-          :key="link.to"
-          :class="link.wide && 'hidden sm:block'"
+        <summary
+          class="grid size-9 cursor-pointer list-none place-items-center rounded-full border border-line bg-raised text-ink [&::-webkit-details-marker]:hidden"
+          aria-label="Menu"
         >
-          <NuxtLink
-            :to="link.to"
-            class="inline-flex h-10 items-center text-muted no-underline active:text-ink"
-            >{{ link.label }}</NuxtLink
+          <svg
+            class="size-[18px]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            aria-hidden="true"
           >
-        </li>
-      </ul>
-    </nav>
+            <path
+              class="group-open:hidden"
+              d="M4 7h16M4 12h16M4 17h16"
+            />
+            <path
+              class="hidden group-open:block"
+              d="m6 6 12 12M18 6 6 18"
+            />
+          </svg>
+        </summary>
+        <nav
+          aria-label="Main"
+          class="absolute inset-x-0 top-full border-b border-line bg-canvas shadow-2xl shadow-black/20"
+        >
+          <ul class="wrap grid py-2 text-[17px] font-medium">
+            <li
+              v-for="link in links"
+              :key="link.to"
+              class="border-b border-line/60 last:border-b-0"
+            >
+              <NuxtLink
+                :to="link.to"
+                class="flex h-13 items-center justify-between text-ink no-underline active:text-link"
+                >{{ link.label }}
+                <svg
+                  class="size-4 text-muted"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m9 6 6 6-6 6" /></svg
+              ></NuxtLink>
+            </li>
+          </ul>
+        </nav>
+      </details>
+    </div>
   </header>
 </template>
