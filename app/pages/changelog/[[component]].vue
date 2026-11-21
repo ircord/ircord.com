@@ -23,52 +23,75 @@ useHead({
 </script>
 
 <template>
-  <div
-    class="mx-auto max-w-3xl px-4 pt-16 pb-20 sm:px-6"
-    :data-changelog="component.id"
-  >
-    <h1 class="text-[36px] leading-tight font-bold tracking-tight sm:text-[48px]">What’s new</h1>
-    <nav
-      aria-label="Component changelogs"
-      class="mt-8 border-b border-line"
-    >
-      <ul class="flex flex-wrap gap-x-5 gap-y-1">
-        <li
-          v-for="log in changelogs"
-          :key="log.id"
+  <div :data-changelog="component.id">
+    <div class="hero relative isolate overflow-hidden">
+      <div
+        class="grid-backdrop absolute inset-0 -z-10"
+        aria-hidden="true"
+      />
+      <div class="mx-auto max-w-3xl px-4 pt-12 pb-10 sm:px-6 sm:pt-20 sm:pb-12">
+        <p class="eyebrow">Release notes</p>
+        <h1
+          class="mt-3 text-[clamp(2.5rem,1.8rem+3vw,3.5rem)] leading-[1.05] font-bold tracking-[-0.03em]"
         >
-          <NuxtLink
-            :to="log.path"
-            external
-            :aria-current="component.id === log.id ? 'page' : undefined"
-            class="inline-flex min-h-11 items-center border-b-2 border-transparent px-1 font-semibold text-muted no-underline hover:text-ink aria-[current=page]:border-accent aria-[current=page]:text-ink"
-            >{{ log.label }}</NuxtLink
-          >
-        </li>
-      </ul>
-    </nav>
-    <div class="mt-8 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-      <h2 class="text-[24px] font-semibold tracking-tight">{{ component.label }} releases</h2>
-      <a
-        :href="component.id === 'desktop' ? site.desktop : changelogSource(component.id)"
-        class="prose-link"
-        data-changelog-source
-        >{{
-          component.id === 'desktop' ? 'View the project on GitHub' : 'Read the changelog on GitHub'
-        }}</a
-      >
+          What’s new
+        </h1>
+        <p class="lede mt-4">{{ description }}</p>
+        <nav
+          aria-label="Component changelogs"
+          class="mt-8"
+        >
+          <ul class="inline-flex gap-1 rounded-full border border-line bg-surface p-1">
+            <li
+              v-for="log in changelogs"
+              :key="log.id"
+            >
+              <NuxtLink
+                :to="log.path"
+                external
+                :aria-current="component.id === log.id ? 'page' : undefined"
+                class="inline-flex h-10 items-center rounded-full px-4 text-[15px] font-semibold text-muted no-underline transition-colors hover:text-ink aria-[current=page]:bg-raised aria-[current=page]:text-ink aria-[current=page]:shadow-sm sm:px-5"
+                >{{ log.label }}</NuxtLink
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
-    <p
-      class="mt-5 leading-relaxed text-muted"
-      role="status"
-      data-changelog-status
-    >
-      Follow the GitHub link to see release notes at the source.
-    </p>
-    <ol
-      class="mt-5 grid gap-6"
-      data-changelog-releases
-      hidden
-    />
+    <div class="mx-auto max-w-3xl px-4 pt-4 pb-20 sm:px-6 sm:pb-28">
+      <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
+        <h2 class="text-[22px] font-semibold tracking-tight sm:text-[24px]">
+          {{ component.label }} releases
+        </h2>
+        <a
+          :href="component.id === 'desktop' ? site.desktop : changelogSource(component.id)"
+          class="prose-link"
+          data-changelog-source
+          >{{
+            component.id === 'desktop'
+              ? 'View the project on GitHub'
+              : 'Read the changelog on GitHub'
+          }}</a
+        >
+      </div>
+      <p
+        class="mt-6 rounded-3xl border border-dashed border-line p-6 leading-relaxed text-muted sm:p-8"
+        role="status"
+        data-changelog-status
+      >
+        Follow the GitHub link to see release notes at the source.
+      </p>
+      <ol
+        class="timeline mt-8"
+        data-changelog-releases
+        hidden
+      />
+    </div>
   </div>
 </template>
+
+<style scoped>
+.hero {
+  background: radial-gradient(70% 80% at 50% 0%, var(--glow), transparent 70%);
+}
+</style>

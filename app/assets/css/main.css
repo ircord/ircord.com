@@ -32,6 +32,8 @@
   --on-accent: #ffffff;
   --link: #be123c;
   --glow: color-mix(in srgb, #d92648 12%, transparent);
+  --new: #15803d;
+  --fixed: #b45309;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -47,6 +49,8 @@
     --on-accent: #1a0a0e;
     --link: #fb7185;
     --glow: color-mix(in srgb, #f43f5e 16%, transparent);
+    --new: #4ade80;
+    --fixed: #fbbf24;
   }
 }
 
@@ -139,6 +143,38 @@
     @apply absolute top-[0.2em] left-0 size-6 bg-link;
     mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 12.5 3.2 3.2L17 9'/%3E%3C/svg%3E")
       center / 15px no-repeat;
+  }
+}
+
+/* Release notes on a vertical line, with a dot per release; the newest dot is filled. */
+@utility timeline {
+  @apply relative grid gap-6 pl-7 sm:gap-8 sm:pl-9;
+
+  &::before {
+    content: '';
+    @apply absolute top-4 bottom-4 left-[7px] w-px bg-line sm:left-[11px];
+  }
+  & > li {
+    @apply relative;
+  }
+  & > li::before {
+    content: '';
+    @apply absolute top-[26px] -left-7 size-[15px] rounded-full border-2 border-line bg-canvas sm:top-8 sm:-left-9 sm:size-[23px] sm:border-[3px];
+  }
+  & > li:first-child::before {
+    @apply border-accent bg-accent shadow-[0_0_0_5px_var(--glow)];
+  }
+}
+
+/* The New, Improved or Fixed label above a group of release notes. */
+@utility release-group {
+  @apply inline-flex rounded-full bg-[color-mix(in_srgb,var(--link)_12%,transparent)] px-2.5 py-0.5 text-[12px] font-semibold tracking-[0.08em] text-link uppercase;
+
+  &[data-kind='new'] {
+    @apply bg-[color-mix(in_srgb,var(--new)_14%,transparent)] text-(--new);
+  }
+  &[data-kind='fixed'] {
+    @apply bg-[color-mix(in_srgb,var(--fixed)_14%,transparent)] text-(--fixed);
   }
 }
 

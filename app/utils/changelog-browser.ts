@@ -57,17 +57,26 @@ function renderBlock(block: Block) {
   return list
 }
 
-function renderRelease(release: Release) {
+function renderRelease(release: Release, index: number) {
   const item = element('li')
-  const article = element('article', 'panel scroll-mt-4 p-6 sm:p-8 wrap-anywhere')
+  const article = element('article', 'panel p-5 sm:p-7 wrap-anywhere')
   const heading = element(
     'h3',
-    'flex flex-wrap items-baseline gap-x-3 text-[24px] font-bold tracking-tight',
+    'flex flex-wrap items-center gap-x-3 gap-y-1 text-[22px] font-bold tracking-tight sm:text-[24px]',
     release.version,
   )
   article.id = release.version
   heading.id = `${release.version}-title`
   article.setAttribute('aria-labelledby', heading.id)
+  if (index === 0) {
+    heading.append(
+      element(
+        'span',
+        'rounded-full bg-accent px-2.5 py-0.5 text-[12px] font-semibold tracking-normal text-on-accent',
+        'Latest',
+      ),
+    )
+  }
   if (release.date) {
     const date = element('time', 'text-[15px] font-medium text-muted', formatDate(release.date))
     date.dateTime = release.date
@@ -75,8 +84,12 @@ function renderRelease(release: Release) {
   }
   article.append(heading)
   for (const group of release.groups) {
-    const section = element('section', 'mt-5')
-    if (group.title) section.append(element('h4', 'eyebrow', group.title))
+    const section = element('section', 'mt-6')
+    if (group.title) {
+      const label = element('h4', 'release-group', group.title)
+      label.dataset.kind = group.title.toLowerCase()
+      section.append(label)
+    }
     section.append(...group.blocks.map(renderBlock))
     article.append(section)
   }
