@@ -11,8 +11,8 @@ The development site listens on port 3100. Run `bun run lint`,
 `bun run typecheck`, `bun run test`, and `bun run generate` to check and
 build the site. Run `docker build .` to build the nginx image.
 
-The static build reads the frontend, backend, and desktop changelogs from the
-component repositories on GitHub. It includes released versions in the generated pages.
+The changelog pages load release notes from GitHub when readers open them.
+The static build serves the page layout and includes links to the source repositories.
 
 Standalone builds use the checked-in contributor list. Release builds use the list from the
 [development environment](https://github.com/ircord/dev-environment).

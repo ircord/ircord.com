@@ -4,8 +4,9 @@
   "type": "module",
   "packageManager": "bun@1.4.4",
   "scripts": {
-    "dev": "nuxt dev --host 127.0.0.1 --port 3100",
-    "generate": "nuxt generate",
+    "dev": "bun run build:changelog && nuxt dev --host 127.0.0.1 --port 3100",
+    "generate": "bun run build:changelog && nuxt generate",
+    "build:changelog": "bun build app/utils/changelog-browser.ts --target browser --minify --outfile public/changelog-live.js",
     "postinstall": "nuxt prepare",
     "typecheck": "nuxt typecheck",
     "lint": "nuxt prepare && eslint .",

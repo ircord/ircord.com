@@ -11,6 +11,7 @@
 .impeccable
 dist
 node_modules
+public/changelog-live.js
 docs
 **/*.md
 **/*.mdx

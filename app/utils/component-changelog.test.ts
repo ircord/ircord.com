@@ -3,8 +3,10 @@ import { test } from 'node:test'
 import { readComponentChangelog } from './component-changelog'
 
 test('reads released notes from the selected GitHub repository', async () => {
-  const releases = await readComponentChangelog('backend', async (url) => {
+  const releases = await readComponentChangelog('backend', async (url, options) => {
     assert.equal(url, 'https://raw.githubusercontent.com/ircord/backend/main/CHANGELOG.md')
+    assert.equal(options?.cache, 'no-cache')
+    assert.equal(options?.credentials, 'omit')
     return new Response('## Unreleased\n\n- Draft note.\n\n## v1.2.3\n\n- Published note.\n')
   })
   assert.deepEqual(

@@ -40,6 +40,7 @@ coverage*
 dist/
 # Nuxt generate also creates a dist symlink.
 /dist
+/public/changelog-live.js
 bin/
 __pycache__/
 *.tsbuildinfo

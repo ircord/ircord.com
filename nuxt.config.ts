@@ -7,8 +7,7 @@ import { changelogs } from './app/utils/component-changelog'
 const root = fileURLToPath(new URL('.', import.meta.url))
 const releaseDir = process.env.IRCORD_RELEASE_DIR ? resolve(process.env.IRCORD_RELEASE_DIR) : root
 
-// The public website at ircord.com: static HTML and CSS with no client scripts. `nuxt generate`
-// renders every page at build time; the Dockerfile serves the result.
+// The public website at ircord.com. Nginx serves the generated HTML and assets.
 export default defineNuxtConfig({
   compatibilityDate: '2026-11-01',
   devtools: { enabled: false },
@@ -16,7 +15,7 @@ export default defineNuxtConfig({
   alias: { '#release-content': releaseDir },
   css: ['~/assets/css/main.css'],
   features: {
-    // The pages work without JavaScript, so none is sent. Styles go to files the CSP allows.
+    // Skip Nuxt hydration. The release notes page adds its own script.
     noScripts: true,
     inlineStyles: false,
   },
