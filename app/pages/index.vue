@@ -128,7 +128,7 @@ const install = [
             {{ site.tagline }}.
           </h1>
           <p class="lede mx-auto mt-5 max-w-2xl text-pretty sm:mt-6 sm:text-[20px]">
-            {{ description }} Open it in a browser or install it on your phone.
+            {{ description }} Use it in your browser, on your phone, or on your desktop.
           </p>
           <div
             class="mx-auto mt-8 flex max-w-xs flex-col gap-3 sm:max-w-none sm:flex-row sm:justify-center"
@@ -155,6 +155,11 @@ const install = [
               >Get started</a
             >
           </div>
+          <a
+            href="#desktop-downloads"
+            class="prose-link mt-4 inline-block"
+            >Desktop downloads</a
+          >
         </div>
 
         <!-- The desktop screenshot in a browser frame, with the phone in front of its corner. On
@@ -603,7 +608,10 @@ const install = [
                 >
               </div>
             </li>
-            <li class="panel flex gap-4 p-5 sm:p-6">
+            <li
+              id="desktop-downloads"
+              class="panel flex scroll-mt-24 gap-4 p-5 sm:p-6"
+            >
               <span class="icon-tile">
                 <svg
                   class="size-6"
@@ -619,13 +627,8 @@ const install = [
                 </svg>
               </span>
               <div class="min-w-0">
-                <h3 class="text-[18px] font-semibold">Native desktop app</h3>
-                <p class="mt-1 text-muted">Planned.</p>
-                <a
-                  :href="site.desktop"
-                  class="prose-link mt-2 inline-block"
-                  >Desktop project</a
-                >
+                <h3 class="text-[18px] font-semibold">IRCord Desktop</h3>
+                <DesktopDownloads class="mt-2" />
               </div>
             </li>
             <li class="panel flex gap-4 p-5 sm:p-6">

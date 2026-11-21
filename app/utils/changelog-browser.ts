@@ -1,10 +1,5 @@
 import { formatDate, type Block, type Inline, type Release } from './changelog'
-import {
-  changelogs,
-  changelogSource,
-  readComponentChangelog,
-  type ChangelogComponent,
-} from './component-changelog'
+import { changelogs, readComponentChangelog, type ChangelogComponent } from './component-changelog'
 
 function element<Tag extends keyof HTMLElementTagNameMap>(
   tag: Tag,
@@ -101,7 +96,6 @@ async function loadChangelog(
   component: ChangelogComponent,
   status: HTMLElement,
   list: HTMLOListElement,
-  source: HTMLAnchorElement,
 ) {
   status.textContent = 'Loading release notes…'
   try {
@@ -114,8 +108,6 @@ async function loadChangelog(
     list.replaceChildren(...releases.map(renderRelease))
     list.hidden = false
     status.hidden = true
-    source.href = changelogSource(component)
-    source.textContent = 'Read the changelog on GitHub'
     // The browser's first attempt to scroll to a release runs before its notes load.
     document.getElementById(window.location.hash.slice(1))?.scrollIntoView()
   } catch {
@@ -127,5 +119,4 @@ const page = document.querySelector<HTMLElement>('[data-changelog]')
 const component = changelogs.find((log) => log.id === page?.dataset.changelog)
 const status = page?.querySelector<HTMLElement>('[data-changelog-status]')
 const list = page?.querySelector<HTMLOListElement>('[data-changelog-releases]')
-const source = page?.querySelector<HTMLAnchorElement>('[data-changelog-source]')
-if (component && status && list && source) void loadChangelog(component.id, status, list, source)
+if (component && status && list) void loadChangelog(component.id, status, list)

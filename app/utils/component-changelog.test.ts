@@ -15,10 +15,43 @@ test('reads released notes from the selected GitHub repository', async () => {
   )
 })
 
-test('allows the desktop project to be missing a changelog before its first release', async () => {
-  const missing = async () => new Response(null, { status: 404 })
-  assert.deepEqual(await readComponentChangelog('desktop', missing), [])
-  await assert.rejects(readComponentChangelog('frontend', missing), /frontend.*HTTP 404/)
+test('uses published desktop releases in release order', async () => {
+  const releases = await readComponentChangelog('desktop', async (url) => {
+    assert.equal(url, 'https://api.github.com/repos/ircord/desktop/releases?per_page=30')
+    return Response.json([
+      {
+        tag_name: 'v0.1.0',
+        published_at: '2026-11-21T15:00:00Z',
+        body: '### New\n\n- First release.',
+      },
+      {
+        tag_name: 'v0.1.1',
+        published_at: '2026-11-21T16:00:00Z',
+        body: '## Fixed\n\n- Bundled fix.',
+      },
+      {
+        tag_name: 'v0.1.2',
+        published_at: '2026-11-21T17:00:00Z',
+        draft: true,
+        body: '- Draft note.',
+      },
+      {
+        tag_name: 'v0.2.0',
+        published_at: '2026-11-21T17:00:00Z',
+        prerelease: true,
+        body: '- Preview.',
+      },
+    ])
+  })
+  assert.deepEqual(
+    releases.map(({ version }) => version),
+    ['v0.1.1', 'v0.1.0'],
+  )
+  assert.equal(releases[0]?.groups[0]?.title, 'Fixed')
+})
+
+test('allows an empty desktop release list', async () => {
+  assert.deepEqual(await readComponentChangelog('desktop', async () => Response.json([])), [])
 })
 
 test('reports a GitHub error instead of showing an empty changelog', async () => {

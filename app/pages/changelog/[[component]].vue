@@ -64,16 +64,17 @@ useHead({
           {{ component.label }} releases
         </h2>
         <a
-          :href="component.id === 'desktop' ? site.desktop : changelogSource(component.id)"
+          :href="changelogSource(component.id)"
           class="prose-link"
-          data-changelog-source
           >{{
-            component.id === 'desktop'
-              ? 'View the project on GitHub'
-              : 'Read the changelog on GitHub'
+            component.id === 'desktop' ? 'View releases on GitHub' : 'Read the changelog on GitHub'
           }}</a
         >
       </div>
+      <DesktopDownloads
+        v-if="component.id === 'desktop'"
+        class="mt-3"
+      />
       <p
         class="mt-6 rounded-3xl border border-dashed border-line p-6 leading-relaxed text-muted sm:p-8"
         role="status"

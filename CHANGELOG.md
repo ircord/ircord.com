@@ -5,6 +5,12 @@ What changed for people using IRCord, newest release first. Each release lists w
 
 ## Unreleased
 
+## v0.7.4 — 2026-11-21
+
+### New
+
+- Download IRCord Desktop for macOS, Windows, and Linux and read its latest release notes on the website.
+
 ## v0.7.3 — 2026-11-21
 
 ### Improved

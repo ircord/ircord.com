@@ -19,3 +19,12 @@ export const site = {
   mobile: `${org}/mobile`,
   license: `${org}/ircord.com/blob/main/LICENSE`,
 }
+
+export const desktopDownloads = [
+  { label: 'macOS (Apple Silicon)', asset: 'IRCord-macOS-Apple-Silicon.dmg' },
+  { label: 'Windows (x64)', asset: 'IRCord-Windows-x64-setup.exe' },
+  { label: 'Linux (x64, .deb)', asset: 'IRCord-Linux-x64.deb' },
+].map(({ label, asset }) => ({
+  label,
+  href: `${site.desktop}/releases/latest/download/${asset}`,
+}))
