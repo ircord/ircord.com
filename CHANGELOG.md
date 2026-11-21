@@ -5,10 +5,13 @@ What changed for people using IRCord, newest release first. Each release lists w
 
 ## Unreleased
 
+## v0.7.3 — 2026-11-21
+
 ### Improved
 
 - Find setup instructions, client downloads, and live release notes for the frontend, backend, and desktop app on the website.
 - Read the website comfortably on a phone, with the menu always in reach at the top of the page.
+- Copy the Docker Compose commands from the self-hosting guide.
 
 ## v0.7.2 — 2026-11-21
 

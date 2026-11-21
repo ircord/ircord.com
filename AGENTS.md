@@ -111,9 +111,9 @@ deployed behavior.
 
 ### Release changes
 
-Build and check the website from this repository. Confirm the configured
-publisher and the website image policy in the homelab GitOps repository before
-cutting a website release.
+A pushed version tag in this repository publishes the website image and the
+GitHub release. See the [publish workflow](.github/workflows/publish.yaml).
+Flux follows stable `vX.Y.Z` images.
 
 Create a release tag only when the user has authorized release or deployment.
 
